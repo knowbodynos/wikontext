@@ -1,5 +1,8 @@
 .DS_Store
 .ipynb_checkpoints
 data
+*.pem
 **/.ipynb_checkpoints
 **/__pycache__
+**/old
+**/*_bkp*

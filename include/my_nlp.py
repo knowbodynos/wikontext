@@ -18,6 +18,7 @@ class Tokenizer:
             self.text = text
             self.sentences = nltk.tokenize.sent_tokenize(text)
             self.sentence_tokens = []
+            self.word_tokens = []
 
     def _delimitize(self, sentence, delimiter = ' '):
         return re.sub(r'([a-zA-Z])\-([a-zA-Z])', r'\1' + self.delimiter + r'\2', sentence)
@@ -53,8 +54,21 @@ class Tokenizer:
     def load(self, text):
         self.text = text
         self.sentences = nltk.tokenize.sent_tokenize(text)
+        return self
 
-    def tokenize(self, lemmatize = False):
+    def word_tokenize(self, lemmatize = False):
+        "Remove LaTeX tags, and extra whitespace, stopwords, and non-alphanumeric \
+        characters. Make all lower case."
+        assert isinstance(lemmatize, bool)
+        try:
+            self.word_tokens = self._tokenize_sentence(self.text)
+        except TypeError:
+            print("Text must be loaded into Tokenizer.")
+        if lemmatize:
+            self.word_tokens = self._lemmatize(self.word_tokens)
+        return self
+
+    def sent_tokenize(self, lemmatize = False):
         "Remove LaTeX tags, and extra whitespace, stopwords, and non-alphanumeric \
         characters. Make all lower case."
         assert isinstance(lemmatize, bool)
@@ -68,6 +82,7 @@ class Tokenizer:
             if lemmatize:
                 word_tokens = self._lemmatize(word_tokens)
             self.sentence_tokens.append(word_tokens)
+        return self
 
 
 # class ReducedCountVectorizer(CountVectorizer):

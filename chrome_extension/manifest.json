@@ -1,0 +1,34 @@
+{
+  "name": "Wikontext",
+  "author": "Ross Altman",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Show the most relevant parts of a linked Wikipedia article with the hover of your mouse.",
+  "homepage_url": "https://github.com/knowbodynos/wikontext",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "permissions": [
+    "http://wikipedia.org/*",
+    "https://wikipedia.org/*",
+    "http://en.wikipedia.org/*",
+    "https://en.wikipedia.org/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://wikipedia.org/*",
+        "https://wikipedia.org/*",
+        "http://*.wikipedia.org/*",
+        "https://*.wikipedia.org/*"
+      ],
+      "js": [
+        "js/jquery/jquery.js",
+        "src/inject.js"
+      ]
+    }
+  ]
+}
