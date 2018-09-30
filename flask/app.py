@@ -25,7 +25,7 @@ from my_nlp import Tokenizer
 
 
 def load_embedding(path):
-    return KeyedVectors.load(path, mmap = 'r')
+    return KeyedVectors.load(path)
 
 
 def mean_filtered(embed, doc):
@@ -181,4 +181,4 @@ def m1(uuid):
 
 if __name__ == '__main__':
     embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
-    app.run(debug = True, host = '0.0.0.0', port = 5000)
+    app.run(debug = False, host = '0.0.0.0', port = 5000)
