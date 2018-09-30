@@ -9,6 +9,7 @@ dependencies:
 - requests
 - flask
 - flask-cors
+- gunicorn
 - nltk
 - scikit-learn
 - gensim
