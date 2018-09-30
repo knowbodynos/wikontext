@@ -17,6 +17,7 @@ from flask_cors import CORS
 ## Allow local relative imports
 module_path = os.path.abspath('..')
 include_path = os.path.join(module_path, 'include')
+models_path = os.path.join(module_path, 'models')
 if include_path not in sys.path:
     sys.path.append(include_path)
 
@@ -179,5 +180,5 @@ def m1(uuid):
 
 
 if __name__ == '__main__':
-    embed = load_embedding('/Users/ross/Dropbox/Projects/insight/wikontext/models/wiki2vec/en.model.kv')
-    app.run(debug = True, host = '0.0.0.0', port = 5957)
+    embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
+    app.run(debug = True, host = '0.0.0.0', port = 5000)
