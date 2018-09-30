@@ -2,7 +2,7 @@
 import os
 import sys
 import re
-from time import sleep
+# from time import sleep
 
 # Data tools
 import numpy as np
@@ -80,15 +80,16 @@ for bilink_ind in range(start_bilink_ind, start_bilink_ind + n_bilinks):
         'format': "json"
     }
 
-    while True:
-        try:
-            origin_data = sess.get(url = wapi_url, params = origin_wapi_params).json()
-            origin_title_norm = origin_data['parse']['title']
-            origin_text = origin_data['parse']['text']['*']
-        except KeyError:
-            sleep(1)
-        else:
-            break
+    # while True:
+    try:
+        origin_data = sess.get(url = wapi_url, params = origin_wapi_params).json()
+        origin_title_norm = origin_data['parse']['title']
+        origin_text = origin_data['parse']['text']['*']
+    except KeyError:
+        continue
+        #     sleep(1)
+        # else:
+        #     break
     if isinstance(origin_text, bytes):
         origin_text = origin_text.decode()
     origin_soup = BeautifulSoup(origin_text, 'html5lib')
@@ -101,15 +102,16 @@ for bilink_ind in range(start_bilink_ind, start_bilink_ind + n_bilinks):
         'format': "json"
     }
 
-    while True:
-        try:
-            target_data = sess.get(url = wapi_url, params = target_wapi_params).json()
-            target_title_norm = target_data['parse']['title']
-            target_text = target_data['parse']['text']['*']
-        except KeyError:
-            sleep(1)
-        else:
-            break
+    # while True:
+    try:
+        target_data = sess.get(url = wapi_url, params = target_wapi_params).json()
+        target_title_norm = target_data['parse']['title']
+        target_text = target_data['parse']['text']['*']
+    except KeyError:
+        continue
+        #     sleep(1)
+        # else:
+        #     break
     if isinstance(target_text, bytes):
         target_text = target_text.decode()
     target_soup = BeautifulSoup(target_text, 'html5lib')
@@ -182,7 +184,7 @@ for bilink_ind in range(start_bilink_ind, start_bilink_ind + n_bilinks):
                 sent_df = sent_df.append(temp_df, sort = False, ignore_index = True).reset_index(drop = True)
     
     sent_df = sent_df.dropna().reset_index(drop = True)
-    sent_df.to_csv(data_path + '/clickstream-enwiki-2018-08-sentences.tsv', sep = '\t', mode = 'a', header = False, index = False)
+    sent_df.dropna().to_csv(data_path + '/clickstream-enwiki-2018-08-sentences.tsv', sep = '\t', mode = 'a', header = False, index = False)
 
     sent_ind += sent_df.shape[0]
 

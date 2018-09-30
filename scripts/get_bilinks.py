@@ -27,4 +27,4 @@ sort_df = np.sort(symm_df[['origin_title', 'target_title']].values.astype(str), 
 drop_df = pd.DataFrame(sort_df).drop_duplicates()
 bilinks_df = symm_df.loc[drop_df.index].sort_values(by = ['n_clicks_forward'], ascending = False)
 
-bilinks_df.to_csv(data_path + '/clickstream-enwiki-2018-08-bilinks.tsv', sep = '\t', index = False)
+bilinks_df.dropna().to_csv(data_path + '/clickstream-enwiki-2018-08-bilinks.tsv', sep = '\t', index = False)

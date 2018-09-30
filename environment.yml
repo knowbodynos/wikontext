@@ -11,9 +11,12 @@ dependencies:
 - flask-cors
 - nltk
 - scikit-learn
+- gensim
 # - bokeh
 - html5lib
 - beautifulsoup4
-# - pip:
+- Cython
+- pip:
+  - fasttext
   # - mwparserfromhell
   # - htmlst

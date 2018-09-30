@@ -4,9 +4,12 @@ import re
 import requests
 # import mwparserfromhell
 import nltk
+import numpy as np
 from bs4 import BeautifulSoup
-import scipy.spatial.distance as sdist
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+# import scipy.spatial.distance as sdist
+# from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity#, paired_distances
+from gensim.models import KeyedVectors
 from flask import Flask, request
 from flask_cors import CORS
 
@@ -18,6 +21,18 @@ if include_path not in sys.path:
     sys.path.append(include_path)
 
 from my_nlp import Tokenizer
+
+
+def load_embedding(path):
+    return KeyedVectors.load(path, mmap = 'r')
+
+
+def mean_filtered(embed, doc):
+    filtered = [x for x in doc.split() if x in embed.vocab]
+    if len(filtered) > 0:
+        return embed[filtered].mean(axis = 0)
+    else:
+        return np.zeros(embed.vector_size)
 
 
 sess = requests.Session()
@@ -113,7 +128,7 @@ def m1(uuid):
         origin_sentence_text = re.sub('\[.*?\]', '', origin_sentence_soup.get_text())
         origin_word_tokens = tok.load(origin_sentence_text).word_tokenize(lemmatize = True).word_tokens
         if len(origin_word_tokens) > 0:
-            origin_sentence_tokens.append(origin_word_tokens)
+            origin_sentence_tokens.append(' '.join(origin_word_tokens))
         i += 1
 
     target_sentence_htmls = []
@@ -124,37 +139,45 @@ def m1(uuid):
         target_sentence_text = re.sub('\[.*?\]', '', target_sentence_soup.get_text())
         target_word_tokens = tok.load(target_sentence_text).word_tokenize(lemmatize = True).word_tokens
         if len(target_word_tokens) > 0:
-            target_sentence_tokens.append(target_word_tokens)
+            target_sentence_tokens.append(' '.join(target_word_tokens))
 
     # hover_text = '\n'.join([target_sentence_htmls[i] for i in range(len(target_sentence_tokens)) if ' '.join(origin_title_tokens) in ' '.join(target_sentence_tokens[i])])
 
-    max_df = 0.9
-    min_df = 1
+    # max_df = 0.9
+    # min_df = 1
 
-    max_features = 1000
+    # max_features = 1000
 
-    min_n_gram = 1
-    max_n_gram = 1
+    # min_n_gram = 1
+    # max_n_gram = 1
 
-    # print(origin_sentence_tokens)
+    # # print(origin_sentence_tokens)
 
-    count_vectorizer = TfidfVectorizer(min_df = min_df, max_df = max_df,
-                                       max_features = max_features,
-                                       ngram_range = (min_n_gram, max_n_gram),
-                                       stop_words = 'english').fit([' '.join(x) for x in origin_sentence_tokens])
+    # tfidf_vectorizer = TfidfVectorizer(min_df = min_df, max_df = max_df,
+    #                                    max_features = max_features,
+    #                                    ngram_range = (min_n_gram, max_n_gram),
+    #                                    stop_words = 'english').fit([' '.join(x) for x in origin_sentence_tokens])
 
-    origin_sentence_vectors = count_vectorizer.transform([' '.join(x) for x in origin_sentence_tokens]).toarray()
-    target_sentence_vectors = count_vectorizer.transform([' '.join(x) for x in target_sentence_tokens]).toarray()
+    # origin_sentence_vectors = tfidf_vectorizer.transform([' '.join(x) for x in origin_sentence_tokens]).toarray()
+    # target_sentence_vectors = tfidf_vectorizer.transform([' '.join(x) for x in target_sentence_tokens]).toarray()
 
-    top_match_indices = sdist.cdist(origin_sentence_vectors, target_sentence_vectors, metric = 'cosine')[origin_context_sentence_ind].argsort()#[::-1]
+    # top_match_indices = sdist.cdist(origin_sentence_vectors, target_sentence_vectors, metric = 'cosine')[origin_context_sentence_ind].argsort()#[::-1]
 
-    n_top_matches = 2
-    sent_range = 2  
+    origin_sentence_vectors = np.array([mean_filtered(embed, sent) for sent in origin_sentence_tokens])
+    target_sentence_vectors = np.array([mean_filtered(embed, sent) for sent in target_sentence_tokens])
 
-    hover_text = '\n'.join([' '.join(target_sentence_htmls[i - sent_range:i + sent_range + 1]) for i in top_match_indices[:n_top_matches]])
+    top_match_indices = cosine_similarity(origin_sentence_vectors, target_sentence_vectors)[origin_context_sentence_ind].argsort()[::-1]
+
+    n_top_matches = 5
+    # sent_range = 2
+
+    # hover_text = '\n'.join([' '.join(target_sentence_htmls[i - sent_range:i + sent_range + 1]) for i in top_match_indices[:n_top_matches]])
+    # hover_text = '<br>---<br>'.join([target_sentence_htmls[i] for i in top_match_indices[:n_top_matches]])
+    hover_text = '<br>'.join([target_sentence_htmls[i] for i in top_match_indices[:n_top_matches]])
     
     return str.encode(hover_text)
 
 
 if __name__ == '__main__':
+    embed = load_embedding('/Users/ross/Dropbox/Projects/insight/wikontext/models/wiki2vec/en.model.kv')
     app.run(debug = True, host = '0.0.0.0', port = 5957)

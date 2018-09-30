@@ -137,7 +137,9 @@ chrome.extension.sendMessage({}, function(response) {
 							    // $('a.mwe-popups-extract p').append(hover_text);
 
 							    // $('a.mwe-popups-extract p').css("height", "500px");
+							    // $('a.mwe-popups-extract p').css("float", "left");
 							    // $('a.mwe-popups-extract p').css("overflow-y", "scroll");
+
 				                $('a.mwe-popups-extract p').html(hover_text);
 							}, function(){
 							    console.log("Page preview taking too long to load.");
