@@ -10,6 +10,7 @@ dependencies:
 - flask
 - flask-cors
 - gunicorn
+- pyopenssl
 - nltk
 - scikit-learn
 - gensim
