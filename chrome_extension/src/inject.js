@@ -122,8 +122,8 @@ chrome.extension.sendMessage({}, function(response) {
 							({
 								type: "POST",
 								// TODO: remove following after done with local testing
-								url: "http://localhost:5957/api/m1/1234",
-								// url: "https://146.115.80.115:5957/api/m1/1234",
+								url: "http://localhost:5000/api/m1/1234",
+								// url: "https://wikontext.us/api/m1/1234",
 								dataType: "text",
 								async: false,
 								data: JSON.stringify(send_dict),
