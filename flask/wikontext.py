@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-import requests
+# import requests
 # import mwparserfromhell
 import nltk
 import numpy as np
@@ -36,8 +36,8 @@ def mean_filtered(embed, doc):
         return np.zeros(embed.vector_size)
 
 
-sess = requests.Session()
-wapi_url = "https://en.wikipedia.org/w/api.php"
+# sess = requests.Session()
+# wapi_url = "https://en.wikipedia.org/w/api.php"
 
 tok = Tokenizer()
 
@@ -181,4 +181,4 @@ def m1(uuid):
 
 if __name__ == '__main__':
     embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
-    app.run(debug = False, host = '0.0.0.0', port = 5000)
+    app.run(debug = False, host = '0.0.0.0', port = 5000)#, ssl_context = ('/etc/letsencrypt/live/wikontext.us/fullchain.pem', '/etc/letsencrypt/live/wikontext.us/privkey.pem'))

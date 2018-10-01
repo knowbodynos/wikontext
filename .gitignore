@@ -5,6 +5,7 @@ models
 embeddings
 eda
 *.pem
+**/.pem
 **/.ipynb_checkpoints
 **/__pycache__
 **/old
