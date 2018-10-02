@@ -189,9 +189,9 @@ def apply_model(uuid):
     return str.encode(hover_text)
 
 
-if __name__ == '__main__':
-    print("Loading model...")
-    embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
-    print("Model successfully loaded.")
+print("Loading model...")
+embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
+print("Model successfully loaded.")
 
+if __name__ == '__main__':
     app.run(debug = True, host = '0.0.0.0', port = 5000)
