@@ -7,20 +7,20 @@ import re
 # Data tools
 import numpy as np
 import pandas as pd
-import scipy.spatial.distance as sdist
-from scipy.stats import norm
+# import scipy.spatial.distance as sdist
+# from scipy.stats import norm
 
 # Scraping tools
 import requests
 from bs4 import BeautifulSoup
 
 # Viz tools
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
+# import matplotlib.pyplot as plt
+# from matplotlib.backends.backend_pdf import PdfPages
 
 # NLP tools
 import nltk
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+# from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 # from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
 # Local

@@ -40,8 +40,8 @@ class Tokenizer:
     def _tokenize_sentence(self, sentence):
         sentence = sentence.replace('\n', ' ')
         sentence = sentence.lower()
-        sentence = self._delimitize(sentence)
-        sentence = self._unlatex(sentence)
+        # sentence = self._delimitize(sentence)
+        # sentence = self._unlatex(sentence)
         # sentence = re.sub('\\\\[\'"]', '', sentence)
         sentence = sentence.translate(self.__punc_trans)
         raw_word_tokens = nltk.tokenize.word_tokenize(sentence)

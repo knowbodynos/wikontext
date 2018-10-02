@@ -52,8 +52,8 @@ def index():
     return "It works!"
 
 
-@app.route('/api/m1/<uuid>', methods = ["GET", "POST"])
-def m1(uuid):
+@app.route('/api/<uuid>', methods = ["GET", "POST"])
+def apply_model(uuid):
     content = request.get_json(force = True)
 
     # origin_title = content['origin']
@@ -180,5 +180,12 @@ def m1(uuid):
 
 
 if __name__ == '__main__':
+    try:
+        nltk.data.find('tokenizers/punkt')
+    except LookupError:
+        nltk.download('punkt')
+
     embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
-    app.run(debug = False, host = '0.0.0.0', port = 5000)#, ssl_context = ('/etc/letsencrypt/live/wikontext.us/fullchain.pem', '/etc/letsencrypt/live/wikontext.us/privkey.pem'))
+    print("Model successfully loaded.")
+
+    app.run(debug = True, host = '0.0.0.0', port = 5000)
