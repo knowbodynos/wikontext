@@ -190,6 +190,7 @@ def apply_model(uuid):
 
 
 if __name__ == '__main__':
+    print("Loading model...")
     embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
     print("Model successfully loaded.")
 
