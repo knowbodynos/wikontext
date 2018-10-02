@@ -23,6 +23,11 @@ if include_path not in sys.path:
 
 from my_nlp import Tokenizer
 
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+
 
 def load_embedding(path):
     return KeyedVectors.load(path)
@@ -180,11 +185,6 @@ def apply_model(uuid):
 
 
 if __name__ == '__main__':
-    try:
-        nltk.data.find('tokenizers/punkt')
-    except LookupError:
-        nltk.download('punkt')
-
     embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
     print("Model successfully loaded.")
 
