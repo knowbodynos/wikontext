@@ -28,9 +28,6 @@ try:
 except LookupError:
     nltk.download('punkt')
 
-embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
-print("Model successfully loaded.")
-
 
 def load_embedding(path):
     return KeyedVectors.load(path)
@@ -188,4 +185,7 @@ def apply_model(uuid):
 
 
 if __name__ == '__main__':
+    embed = load_embedding(models_path + '/wiki2vec/en.model.kv')
+    print("Model successfully loaded.")
+    
     app.run(debug = True, host = '0.0.0.0', port = 5000)
