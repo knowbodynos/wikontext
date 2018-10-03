@@ -1,0 +1,7 @@
+[2018-10-02 23:18:09 +0000] [29494] [INFO] Starting gunicorn 19.9.0
+[2018-10-02 23:18:09 +0000] [29494] [INFO] Listening at: http://127.0.0.1:8000 (29494)
+[2018-10-02 23:18:09 +0000] [29494] [INFO] Using worker: sync
+[2018-10-02 23:18:09 +0000] [29497] [INFO] Booting worker with pid: 29497
+[2018-10-02 23:20:49 +0000] [29494] [INFO] Handling signal: term
+[2018-10-02 23:20:49 +0000] [29497] [INFO] Worker exiting (pid: 29497)
+[2018-10-02 23:20:50 +0000] [29494] [INFO] Shutting down: Master

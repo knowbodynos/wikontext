@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 # from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity#, paired_distances
 from gensim.models import KeyedVectors
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_cors import CORS
 
 # Local
@@ -59,7 +59,7 @@ CORS(app)
 @app.route('/')
 @app.route('/index')
 def index():
-    return "It works!"
+    return render_template('index.html')
 
 
 @app.route('/api/<uuid>', methods = ["GET", "POST"])
