@@ -177,14 +177,14 @@ def apply_model(uuid):
     origin_sentence_vectors = np.array([mean_filtered(embed, sent) for sent in origin_sentence_tokens])
     target_sentence_vectors = np.array([mean_filtered(embed, sent) for sent in target_sentence_tokens])
 
-    top_match_indices = cosine_similarity(origin_sentence_vectors, target_sentence_vectors)[origin_context_sentence_ind].argsort()[::-1]
+    top_match_indices = (1 - cosine_similarity(origin_sentence_vectors, target_sentence_vectors)[origin_context_sentence_ind]).argsort()
 
-    n_top_matches = 5
+    n_top_matches = 10
     # sent_range = 2
 
     # hover_text = '\n'.join([' '.join(target_sentence_htmls[i - sent_range:i + sent_range + 1]) for i in top_match_indices[:n_top_matches]])
     # hover_text = '<br>---<br>'.join([target_sentence_htmls[i] for i in top_match_indices[:n_top_matches]])
-    hover_text = '<br>'.join([target_sentence_htmls[i] for i in top_match_indices[:n_top_matches]])
+    hover_text = '<br>---<br>'.join([target_sentence_htmls[i] for i in top_match_indices[:n_top_matches]])
     
     return str.encode(hover_text)
 

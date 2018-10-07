@@ -35,7 +35,7 @@ titles_df = pd.read_csv(data_path + '/enwiki-latest-all-titles.tsv', sep = '\t')
 
 titles = titles_df[titles_df.page_namespace == 0].sample(frac = 1).page_title
 
-with open(data_path + '/sentence_samples.tsv', 'w') as sample_stream:
+with open(data_path + '/enwiki-latest-all-titles-sentence_samples.tsv', 'w') as sample_stream:
     print("sentence", file = sample_stream)
     title_ind = 0
     sent_ind = 0
@@ -64,7 +64,7 @@ with open(data_path + '/sentence_samples.tsv', 'w') as sample_stream:
             for p in soup.find_all('p'):
                 for p_split in p.decode_contents().split('\n'):
                     for sent in nltk.sent_tokenize(p_split):
-                        sent_content = BeautifulSoup(sent, 'html5lib').body.get_text()
+                        sent_content = BeautifulSoup(sent, 'html5lib').body.get_text().replace(u'\xa0', u' ')
                         sent_content = re.sub('\[.*?\]', '', sent_content)
                         sent_content = ' '.join(tok.load(sent_content).word_tokenize(lemmatize = True).word_tokens)
                         sent_list.append(sent_content)
