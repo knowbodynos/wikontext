@@ -232,15 +232,16 @@ def apply_model(uuid):
 
     # top_match_indices = sdist.cdist(origin_sentence_vectors, target_sentence_vectors, metric = 'cosine')[origin_context_sentence_ind].argsort()#[::-1]
 
+    n_top_matches = 10
+
     if len(origin_sentence_tokens) == 0:
-        hover_text = ' '.join(target_sentence_htmls[:10])
+        hover_text = ' '.join(target_sentence_htmls[:n_top_matches])
     else:
         origin_sentence_vectors = wiki2vec_vectorizer(origin_sentence_tokens)#np.array([mean_filtered(embed, sent) for sent in origin_sentence_tokens])
         target_sentence_vectors = wiki2vec_vectorizer(target_sentence_tokens)#np.array([mean_filtered(embed, sent) for sent in target_sentence_tokens])
 
         top_match_indices = (1 - cosine_similarity(origin_sentence_vectors, target_sentence_vectors)[0]).argsort()
 
-        n_top_matches = 10
         # sent_range = 2
 
         # hover_text = '\n'.join([' '.join(target_sentence_htmls[i - sent_range:i + sent_range + 1]) for i in top_match_indices[:n_top_matches]])
