@@ -112,7 +112,7 @@ chrome.extension.sendMessage({}, function(response) {
 
 				    // $('<div id="popup-notification">'+content+'abcdefg'+'</div>').css(cssRules).appendTo('body').fadeIn();
 
-					if (String(url).includes('/wiki/') && !target_title.includes('#')) {
+					if (String(url).match('^/wiki/') && !target_title.includes('#')) {
 						
 						var send_dict = {origin_title: origin_title,
 										 target_title: target_title,

@@ -136,7 +136,7 @@ def apply_model(uuid):
             origin_context_sentence_ind = i
         origin_sentence_soup = BeautifulSoup(origin_sentence_html, 'html5lib').body
         origin_sentence_htmls.append(origin_sentence_soup.decode_contents())
-        origin_sentence_text = re.sub('\[.*?\]', '', origin_sentence_soup.get_text())
+        origin_sentence_text = re.sub('\[.*?\]', '', origin_sentence_soup.get_text().replace(u'\xa0', u' '))
         origin_word_tokens = tok.load(origin_sentence_text).word_tokenize(lemmatize = True).word_tokens
         if len(origin_word_tokens) > 0:
             origin_sentence_tokens.append(' '.join(origin_word_tokens))
@@ -147,7 +147,7 @@ def apply_model(uuid):
     for target_sentence_html in nltk.sent_tokenize(target_content):
         target_sentence_soup = BeautifulSoup(target_sentence_html, 'html5lib').body
         target_sentence_htmls.append(target_sentence_soup.decode_contents())
-        target_sentence_text = re.sub('\[.*?\]', '', target_sentence_soup.get_text())
+        target_sentence_text = re.sub('\[.*?\]', '', target_sentence_soup.get_text().replace(u'\xa0', u' '))
         target_word_tokens = tok.load(target_sentence_text).word_tokenize(lemmatize = True).word_tokens
         if len(target_word_tokens) > 0:
             target_sentence_tokens.append(' '.join(target_word_tokens))

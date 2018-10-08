@@ -45,6 +45,15 @@ def mean_filtered(embed, doc, vocab_weights = None):
     else:
         return np.zeros(embed.vector_size, dtype = np.float32)
 
+def logreg_distance(logreg, A, B):
+    r = np.empty((A.shape[0], B.shape[0], A.shape[1] + B.shape[1]))
+    for i in range(A.shape[0]):
+        for j in range(B.shape[0]):
+            r[i, j] = np.concatenate([A[i], B[j]], axis = 0)
+    r = r.reshape(-1, A.shape[1] + B.shape[1])
+    r = logreg.predict_proba(r)[:, 1].reshape(A.shape[0], B.shape[0])
+    return r
+
 def sentence_lists(origin_title, target_title, session = requests.Session(), tokenizer = Tokenizer()):
     wapi_url = "https://en.wikipedia.org/w/api.php"
     
@@ -176,6 +185,16 @@ glove_tfidf_embed = joblib.load(models_path + '/tfidf/enwiki-latest-all-glove_tf
 glove_idf = dict(zip(glove_tfidf_embed.get_feature_names(), glove_tfidf_embed.idf_))
 tfidf_glove_vectorizer = np.vectorize(lambda x: mean_filtered(glove_embed, x, vocab_weights = glove_idf), signature = '()->(n)')
 
+logreg_wiki2vec_cos = joblib.load(models_path + '/logreg/logreg_wiki2vec_cos.joblib')
+logreg_wiki2vec_euc = joblib.load(models_path + '/logreg/logreg_wiki2vec_euc.joblib')
+logreg_tfidf_wiki2vec_cos = joblib.load(models_path + '/logreg/logreg_tfidf_wiki2vec_cos.joblib')
+logreg_tfidf_wiki2vec_euc = joblib.load(models_path + '/logreg/logreg_tfidf_wiki2vec_euc.joblib')
+
+logreg_glove_cos = joblib.load(models_path + '/logreg/logreg_glove_cos.joblib')
+logreg_glove_euc = joblib.load(models_path + '/logreg/logreg_glove_euc.joblib')
+logreg_tfidf_glove_cos = joblib.load(models_path + '/logreg/logreg_tfidf_glove_cos.joblib')
+logreg_tfidf_glove_euc = joblib.load(models_path + '/logreg/logreg_tfidf_glove_euc.joblib')
+
 n_bilinks = int(sys.argv[1])
 n_selected = int(sys.argv[2])
 
@@ -217,15 +236,23 @@ for bilink_ind in range(start_bilink_ind, start_bilink_ind + n_bilinks):
             v_cols = ['target_sent_linked', 'target_sent_baseline', 'target_sent_random', 'dist_linked', 'dist_baseline', 'dist_random', 'n_relevant_selected', 'avg_prec']
             valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_wiki2vec_cos' for x in v_cols], wiki2vec_vectorizer, lambda x, y: 1 - cosine_similarity(x, y))], axis = 1)
             valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_wiki2vec_euc' for x in v_cols], wiki2vec_vectorizer, euclidean_distances)], axis = 1)
+            valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_wiki2vec_logreg_cos' for x in v_cols], wiki2vec_vectorizer, lambda x, y: logreg_distance(logreg_wiki2vec_cos, x, y))], axis = 1)
+            valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_wiki2vec_logreg_euc' for x in v_cols], wiki2vec_vectorizer, lambda x, y: logreg_distance(logreg_wiki2vec_euc, x, y))], axis = 1)
 
             valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_tfidf_wiki2vec_cos' for x in v_cols], tfidf_wiki2vec_vectorizer, lambda x, y: 1 - cosine_similarity(x, y))], axis = 1)
             valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_tfidf_wiki2vec_euc' for x in v_cols], tfidf_wiki2vec_vectorizer, euclidean_distances)], axis = 1)
+            valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_tfidf_wiki2vec_logreg_cos' for x in v_cols], tfidf_wiki2vec_vectorizer, lambda x, y: logreg_distance(logreg_tfidf_wiki2vec_cos, x, y))], axis = 1)
+            valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_tfidf_wiki2vec_logreg_euc' for x in v_cols], tfidf_wiki2vec_vectorizer, lambda x, y: logreg_distance(logreg_tfidf_wiki2vec_euc, x, y))], axis = 1)
 
             valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_glove_cos' for x in v_cols], glove_vectorizer, lambda x, y: 1 - cosine_similarity(x, y))], axis = 1)
             valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_glove_euc' for x in v_cols], glove_vectorizer, euclidean_distances)], axis = 1)
+            valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_glove_logreg_cos' for x in v_cols], glove_vectorizer, lambda x, y: logreg_distance(logreg_glove_cos, x, y))], axis = 1)
+            valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_glove_logreg_euc' for x in v_cols], glove_vectorizer, lambda x, y: logreg_distance(logreg_glove_euc, x, y))], axis = 1)
 
             valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_tfidf_glove_cos' for x in v_cols], tfidf_glove_vectorizer, lambda x, y: 1 - cosine_similarity(x, y))], axis = 1)
             valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_tfidf_glove_euc' for x in v_cols], tfidf_glove_vectorizer, euclidean_distances)], axis = 1)
+            valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_tfidf_glove_logreg_cos' for x in v_cols], tfidf_glove_vectorizer, lambda x, y: logreg_distance(logreg_tfidf_glove_cos, x, y))], axis = 1)
+            valid_df = pd.concat([valid_df, get_df(sentences, indices, rand_indices, n_selected, [x + '_tfidf_glove_logreg_euc' for x in v_cols], tfidf_glove_vectorizer, lambda x, y: logreg_distance(logreg_tfidf_glove_euc, x, y))], axis = 1)
 
             if os.path.exists(data_path + '/clickstream-enwiki-2018-08-validation.tsv'):
                 valid_df.to_csv(data_path + '/clickstream-enwiki-2018-08-validation.tsv', sep = '\t', mode = 'a', header = False, index = False)
