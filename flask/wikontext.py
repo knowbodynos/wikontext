@@ -145,6 +145,7 @@ def apply_model(uuid):
     target_sentence_htmls = []
     target_sentence_tokens = []
     for target_sentence_html in nltk.sent_tokenize(target_content):
+        print(target_sentence_html)
         target_sentence_soup = BeautifulSoup(target_sentence_html, 'html5lib').body
         target_sentence_htmls.append(target_sentence_soup.decode_contents())
         target_sentence_text = re.sub('\[.*?\]', '', target_sentence_soup.get_text().replace(u'\xa0', u' '))
