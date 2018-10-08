@@ -113,11 +113,25 @@ def apply_model(uuid):
     origin_title = content['origin_title']
     target_title = content['target_title']
 
-    origin_content = content['origin_content']
-    target_content = content['target_content']
+    origin_content = BeautifulSoup(content['origin_content'], 'html5lib')
+    for x in origin_content.find_all("sup", {'class': 'reference'}):
+        x.decompose()
+    origin_content = origin_content.decode_contents()
 
-    origin_context_a = content['origin_context_a']
-    origin_context_p = content['origin_context_p']
+    target_content = BeautifulSoup(content['target_content'], 'html5lib')
+    for x in target_content.find_all("sup", {'class': 'reference'}):
+        x.decompose()
+    target_content = target_content.decode_contents()
+
+    origin_context_a = BeautifulSoup(content['origin_context_a'], 'html5lib')
+    for x in origin_context_a.find_all("sup", {'class': 'reference'}):
+        x.decompose()
+    origin_context_a = origin_context_a.decode_contents()
+
+    origin_context_p = BeautifulSoup(content['origin_context_p'], 'html5lib')
+    for x in origin_context_p.find_all("sup", {'class': 'reference'}):
+        x.decompose()
+    origin_context_p = origin_context_p.decode_contents()
 
     origin_context = origin_context_p
     for origin_context_p_sentence in nltk.sent_tokenize(origin_context_p):
