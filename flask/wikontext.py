@@ -142,19 +142,20 @@ def apply_model(uuid):
 
     origin_sentence_htmls = []
     origin_sentence_tokens = []
-    origin_context_sentence_ind = 0
-    i = 0
+    # origin_context_sentence_ind = 0
+    # i = 0
     for origin_sentence_html in nltk.sent_tokenize(origin_content):
         origin_sentence_html = origin_sentence_html.strip()
         if origin_sentence_html == origin_context:
-            origin_context_sentence_ind = i
-        origin_sentence_soup = BeautifulSoup(origin_sentence_html, 'html5lib').body
-        origin_sentence_htmls.append(origin_sentence_soup.decode_contents())
-        origin_sentence_text = re.sub('\[.*?\]', '', origin_sentence_soup.get_text().replace(u'\xa0', u' '))
-        origin_word_tokens = tok.load(origin_sentence_text).word_tokenize(lemmatize = True).word_tokens
-        if len(origin_word_tokens) > 0:
-            origin_sentence_tokens.append(' '.join(origin_word_tokens))
-        i += 1
+            # origin_context_sentence_ind = i
+            origin_sentence_soup = BeautifulSoup(origin_sentence_html, 'html5lib').body
+            origin_sentence_htmls.append(origin_sentence_soup.decode_contents())
+            origin_sentence_text = re.sub('\[.*?\]', '', origin_sentence_soup.get_text().replace(u'\xa0', u' '))
+            origin_word_tokens = tok.load(origin_sentence_text).word_tokenize(lemmatize = True).word_tokens
+            if len(origin_word_tokens) > 0:
+                origin_sentence_tokens.append(' '.join(origin_word_tokens))
+                break
+        # i += 1
 
     target_sentence_htmls = []
     target_sentence_tokens = []
@@ -192,7 +193,7 @@ def apply_model(uuid):
     origin_sentence_vectors = np.array([mean_filtered(embed, sent) for sent in origin_sentence_tokens])
     target_sentence_vectors = np.array([mean_filtered(embed, sent) for sent in target_sentence_tokens])
 
-    top_match_indices = (1 - cosine_similarity(origin_sentence_vectors, target_sentence_vectors)[origin_context_sentence_ind]).argsort()
+    top_match_indices = (1 - cosine_similarity(origin_sentence_vectors, target_sentence_vectors)[0]).argsort()
 
     n_top_matches = 10
     # sent_range = 2
