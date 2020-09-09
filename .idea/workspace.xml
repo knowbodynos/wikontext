@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f96fb772-3371-4ccc-8e4f-9e60f9cbf6bc" name="Default Changelist" comment="New branch" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1hG9FzFTAUEmBglZGyR4GSzUAyK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f96fb772-3371-4ccc-8e4f-9e60f9cbf6bc" name="Default Changelist" comment="" />
+      <created>1599626461519</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599626461519</updated>
+    </task>
+    <task id="LOCAL-00001" summary="New branch">
+      <created>1599626757272</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1599626757272</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="New branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="New branch" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="151" y="22" width="997" height="705" key="SettingsEditor" timestamp="1599626596878">
+      <screen x="0" y="22" width="1280" height="705" />
+    </state>
+    <state x="151" y="22" width="997" height="705" key="SettingsEditor/0.22.1280.705@0.22.1280.705" timestamp="1599626596878" />
+    <state x="250" y="81" key="Vcs.Push.Dialog.v2" timestamp="1599626769781">
+      <screen x="0" y="22" width="1280" height="705" />
+    </state>
+    <state x="250" y="81" key="Vcs.Push.Dialog.v2/0.22.1280.705@0.22.1280.705" timestamp="1599626769781" />
+  </component>
+</project>
