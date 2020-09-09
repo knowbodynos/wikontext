@@ -1,48 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="f96fb772-3371-4ccc-8e4f-9e60f9cbf6bc" name="Default Changelist" comment="New branch" />
+    <list default="true" id="3974f7b0-d2ea-4c4a-a4ea-fac8cb931c7c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/wikontext.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wikontext.nginx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wikontext/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wikontext/flask/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wikontext/include/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/entrypoint.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask/static/img/favicon.png" beforeDir="false" afterPath="$PROJECT_DIR$/wikontext/flask/static/img/favicon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask/static/img/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/wikontext/flask/static/img/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask/static/styles/cover.css" beforeDir="false" afterPath="$PROJECT_DIR$/wikontext/flask/static/styles/cover.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/wikontext/flask/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/wikontext/flask/templates/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask/wikontext.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikontext/flask/wikontext.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flask/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikontext/flask/wsgi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/my_nlp.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikontext/include/nlp.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Setup Script" />
+      </list>
     </option>
+  </component>
+  <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1hG9FzFTAUEmBglZGyR4GSzUAyK" />
+  <component name="ProjectId" id="1hGClsUGFgcoohntEMzdTiJRycu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f96fb772-3371-4ccc-8e4f-9e60f9cbf6bc" name="Default Changelist" comment="" />
-      <created>1599626461519</created>
+      <changelist id="3974f7b0-d2ea-4c4a-a4ea-fac8cb931c7c" name="Default Changelist" comment="" />
+      <created>1599628195287</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1599626461519</updated>
+      <updated>1599628195287</updated>
     </task>
-    <task id="LOCAL-00001" summary="New branch">
-      <created>1599626757272</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1599626757272</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.config" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -54,19 +93,16 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="New branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="New branch" />
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="151" y="22" width="997" height="705" key="SettingsEditor" timestamp="1599626596878">
+    <state x="333" y="163" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599629217069">
       <screen x="0" y="22" width="1280" height="705" />
     </state>
-    <state x="151" y="22" width="997" height="705" key="SettingsEditor/0.22.1280.705@0.22.1280.705" timestamp="1599626596878" />
-    <state x="250" y="81" key="Vcs.Push.Dialog.v2" timestamp="1599626769781">
+    <state x="333" y="163" key="#com.intellij.fileTypes.FileTypeChooser/0.22.1280.705@0.22.1280.705" timestamp="1599629217069" />
+    <state x="151" y="22" width="997" height="705" key="SettingsEditor" timestamp="1599629269766">
       <screen x="0" y="22" width="1280" height="705" />
     </state>
-    <state x="250" y="81" key="Vcs.Push.Dialog.v2/0.22.1280.705@0.22.1280.705" timestamp="1599626769781" />
+    <state x="151" y="22" width="997" height="705" key="SettingsEditor/0.22.1280.705@0.22.1280.705" timestamp="1599629269766" />
   </component>
 </project>

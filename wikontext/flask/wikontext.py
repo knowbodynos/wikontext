@@ -1,5 +1,5 @@
-import os
-import sys
+#import os
+#import sys
 import re
 # import requests
 # import mwparserfromhell
@@ -7,22 +7,14 @@ import nltk
 import numpy as np
 from bs4 import BeautifulSoup
 # import scipy.spatial.distance as sdist
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
-from sklearn.externals import joblib
+# from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity # , euclidean_distances
+# from sklearn.externals import joblib
 from gensim.models import KeyedVectors
 from flask import Flask, request, render_template
 from flask_cors import CORS
 
-# Local
-## Allow local relative imports
-module_path = os.path.abspath('..')
-include_path = os.path.join(module_path, 'include')
-models_path = os.path.join(module_path, 'models')
-if include_path not in sys.path:
-    sys.path.append(include_path)
-
-from my_nlp import Tokenizer
+from .. include.nlp import Tokenizer
 
 try:
     nltk.data.find('tokenizers/punkt')
@@ -252,7 +244,7 @@ def apply_model(uuid):
 
 
 print("Loading model...")
-wiki2vec_embed = KeyedVectors.load(models_path + '/wiki2vec/en.model.kv')
+wiki2vec_embed = KeyedVectors.load('/app/wiki2vec/en.model.kv')
 wiki2vec_vectorizer = np.vectorize(lambda x: mean_filtered(wiki2vec_embed, x), signature = '()->(n)')
 # wiki2vec_tfidf_embed = joblib.load(models_path + '/tfidf/enwiki-latest-all-wiki2vec_tfidf_embed.joblib')
 # wiki2vec_idf = dict(zip(wiki2vec_tfidf_embed.get_feature_names(), wiki2vec_tfidf_embed.idf_))
