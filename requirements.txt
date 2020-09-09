@@ -1,0 +1,8 @@
+awscli
+beautifulsoup4
+flask
+flask-cors
+gensim
+gunicorn
+nltk
+scikit-learn
