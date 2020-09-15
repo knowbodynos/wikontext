@@ -12,7 +12,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Configure nginx
-COPY wikontext.nginx /etc/nginx/sites-enabled/wikontext.nginx
+COPY nginx /etc/nginx
 
 # Install requirements
 COPY requirements.txt requirements.txt
