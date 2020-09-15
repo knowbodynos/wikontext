@@ -84,6 +84,8 @@ class Tokenizer:
             self.sentence_tokens.append(word_tokens)
         return self
 
+tokenizer = Tokenizer()
+
 
 # class ReducedCountVectorizer(CountVectorizer):
 #     def __init__(self, input='content', encoding='utf-8', decode_error='strict', strip_accents=None,

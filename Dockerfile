@@ -9,13 +9,16 @@ RUN apt-get update && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache -r /tmp/requirements.txt
+RUN mkdir /models
+ENV MODELS_DIR /models
 
-COPY wikontext /wikontext
-COPY wikontext.nginx /etc/nginx/sites-enabled/wikontext.nginx
+WORKDIR /root
+COPY . .
 
-WORKDIR /app
-COPY entrypoint.sh /app/entrypoint.sh
+RUN mv wikontext.nginx /etc/nginx/sites-enabled/wikontext.nginx
 
-ENTRYPOINT ["./entrypoint.sh"]
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN pip install --no-cache-dir .
+
+CMD ["./entrypoint.sh"]

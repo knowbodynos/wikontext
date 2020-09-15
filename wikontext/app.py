@@ -1,4 +1,4 @@
-#import os
+import os
 #import sys
 import re
 # import requests
@@ -14,7 +14,8 @@ from gensim.models import KeyedVectors
 from flask import Flask, request, render_template
 from flask_cors import CORS
 
-from .. include.nlp import Tokenizer
+from . import utils
+from .nlp import tokenizer
 
 try:
     nltk.data.find('tokenizers/punkt')
@@ -27,58 +28,8 @@ except LookupError:
     nltk.download('wordnet')
 
 
-def load_embedding(path):
-    return KeyedVectors.load(path)
-
-
-def shift_sup_left(text):
-    temp_text = str(text)
-    shifted_text = re.sub(r'\.(<sup.*?/sup>)', r'\1.', temp_text)
-    while shifted_text != temp_text:
-        temp_text = shifted_text
-        shifted_text = re.sub(r'\.(<sup.*?/sup>)', r'\1.', temp_text)
-    return shifted_text
-
-
-def shift_sup_right(text):
-    temp_text = str(text)
-    shifted_text = re.sub(r'(<sup.*?/sup>)\.', r'.\1', temp_text)
-    while shifted_text != temp_text:
-        temp_text = shifted_text
-        shifted_text = re.sub(r'(<sup.*?/sup>)\.', r'.\1', temp_text)
-    return shifted_text
-
-
-def mean_filtered(embed, doc, vocab_weights = None):
-    embed_filtered = [x for x in doc.split() if x in embed.vocab]
-    if len(embed_filtered) > 0:
-        if vocab_weights is None:
-            return embed[embed_filtered].mean(axis = 0)
-        else:
-            weight_filtered = [x for x in embed_filtered if x in vocab_weights]
-            if len(weight_filtered) > 0:
-                weights = np.array([vocab_weights[x] for x in weight_filtered])
-                return weights.dot(embed[weight_filtered]) / weights.sum()
-            else:
-                return np.zeros(embed.vector_size, dtype = np.float32)
-    else:
-        return np.zeros(embed.vector_size, dtype = np.float32)
-
-
-def logreg_distance(logreg, A, B):
-    r = np.empty((A.shape[0], B.shape[0], A.shape[1] + B.shape[1]))
-    for i in range(A.shape[0]):
-        for j in range(B.shape[0]):
-            r[i, j] = np.concatenate([A[i], B[j]], axis = 0)
-    r = r.reshape(-1, A.shape[1] + B.shape[1])
-    r = logreg.predict_proba(r)[:, 1].reshape(A.shape[0], B.shape[0])
-    return r
-
-
 # sess = requests.Session()
 # wapi_url = "https://en.wikipedia.org/w/api.php"
-
-tok = Tokenizer()
 
 
 app = Flask(__name__)
@@ -127,14 +78,14 @@ def apply_model(uuid):
     #         origin_extract = page['revisions'][0]['slots']['main']['*']
     #         parsed_origin_extract = mwparserfromhell.parse(origin_extract.replace('\n', ' ')).strip_code()
     #         origin_sentences = nltk.tokenize.sent_tokenize(parsed_origin_extract)
-    #         origin_sentence_tokens = tok.load(parsed_origin_extract).tokenize(lemmatize = True).sentence_tokens
+    #         origin_sentence_tokens = tokenizer.load(parsed_origin_extract).tokenize(lemmatize = True).sentence_tokens
     #     elif page['title'] == norm_target_title:
     #         target_extract = page['revisions'][0]['slots']['main']['*']
     #         parsed_target_extract = mwparserfromhell.parse(target_extract.replace('\n', ' ')).strip_code()
     #         target_sentences = nltk.tokenize.sent_tokenize(parsed_target_extract)
-    #         target_sentence_tokens = tok.load(parsed_target_extract).tokenize(lemmatize = True).sentence_tokens
+    #         target_sentence_tokens = tokenizer.load(parsed_target_extract).tokenize(lemmatize = True).sentence_tokens
 
-    # title_tokens = tok.load(norm_origin_title).tokenize(lemmatize = True).sentence_tokens[0]
+    # title_tokens = tokenizer.load(norm_origin_title).tokenize(lemmatize = True).sentence_tokens[0]
     # hover_text = '\n'.join([target_sentences[i] for i in range(len(target_sentence_tokens)) if all(x in target_sentence_tokens[i] for x in title_tokens)])
     
     # return str.encode(hover_text)
@@ -142,25 +93,25 @@ def apply_model(uuid):
     origin_title = content['origin_title']
     target_title = content['target_title']
 
-    origin_content = shift_sup_left(content['origin_content'])
+    origin_content = utils.shift_sup_left(content['origin_content'])
     # origin_content = BeautifulSoup(content['origin_content'], 'html5lib')
     # for x in origin_content.find_all("sup", {'class': 'reference'}):
     #     x.decompose()
     # origin_content = origin_content.body.decode_contents()
 
-    target_content = shift_sup_left(content['target_content'])
+    target_content = utils.shift_sup_left(content['target_content'])
     # target_content = BeautifulSoup(content['target_content'], 'html5lib')
     # for x in target_content.find_all("sup", {'class': 'reference'}):
     #     x.decompose()
     # target_content = target_content.body.decode_contents()
 
-    origin_context_a = shift_sup_left(content['origin_context_a'])
+    origin_context_a = utils.shift_sup_left(content['origin_context_a'])
     # origin_context_a = BeautifulSoup(content['origin_context_a'], 'html5lib')
     # for x in origin_context_a.find_all("sup", {'class': 'reference'}):
     #     x.decompose()
     # origin_context_a = origin_context_a.body.decode_contents()
 
-    origin_context_p = shift_sup_left(content['origin_context_p'])
+    origin_context_p = utils.shift_sup_left(content['origin_context_p'])
     # origin_context_p = BeautifulSoup(content['origin_context_p'], 'html5lib')
     # for x in origin_context_p.find_all("sup", {'class': 'reference'}):
     #     x.decompose()
@@ -171,7 +122,7 @@ def apply_model(uuid):
         if origin_context_a in origin_context_p_sentence:
             origin_context = origin_context_p_sentence.strip()
 
-    origin_title_tokens = tok.load(origin_title).word_tokenize(lemmatize = True).word_tokens
+    origin_title_tokens = tokenizer.load(origin_title).word_tokenize(lemmatize = True).word_tokens
 
     origin_sentence_htmls = []
     origin_sentence_tokens = []
@@ -184,9 +135,9 @@ def apply_model(uuid):
                 # origin_context_sentence_ind = i
                 origin_sentence_soup = BeautifulSoup(origin_sentence_html, 'html5lib').body
                 origin_sentence_text = re.sub('\[.*?\]', '', origin_sentence_soup.get_text().replace(u'\xa0', u' '))
-                origin_word_tokens = tok.load(origin_sentence_text).word_tokenize(lemmatize = True).word_tokens
+                origin_word_tokens = tokenizer.load(origin_sentence_text).word_tokenize(lemmatize = True).word_tokens
                 if len(origin_word_tokens) > 0:
-                    origin_sentence_htmls.append(shift_sup_right(origin_sentence_soup.decode_contents()))
+                    origin_sentence_htmls.append(utils.shift_sup_right(origin_sentence_soup.decode_contents()))
                     origin_sentence_tokens.append(' '.join(origin_word_tokens))
                     break
         # i += 1
@@ -197,9 +148,9 @@ def apply_model(uuid):
         for target_sentence_html in nltk.sent_tokenize(p_split):
             target_sentence_soup = BeautifulSoup(target_sentence_html, 'html5lib').body
             target_sentence_text = re.sub('\[.*?\]', '', target_sentence_soup.get_text().replace(u'\xa0', u' '))
-            target_word_tokens = tok.load(target_sentence_text).word_tokenize(lemmatize = True).word_tokens
+            target_word_tokens = tokenizer.load(target_sentence_text).word_tokenize(lemmatize = True).word_tokens
             if len(target_word_tokens) > 0:
-                target_sentence_htmls.append(shift_sup_right(target_sentence_soup.decode_contents()))
+                target_sentence_htmls.append(utils.shift_sup_right(target_sentence_soup.decode_contents()))
                 target_sentence_tokens.append(' '.join(target_word_tokens))
 
     # hover_text = '\n'.join([target_sentence_htmls[i] for i in range(len(target_sentence_tokens)) if ' '.join(origin_title_tokens) in ' '.join(target_sentence_tokens[i])])
@@ -229,8 +180,8 @@ def apply_model(uuid):
     if len(origin_sentence_tokens) == 0:
         hover_text = ' '.join(target_sentence_htmls[:n_top_matches])
     else:
-        origin_sentence_vectors = wiki2vec_vectorizer(origin_sentence_tokens)#np.array([mean_filtered(embed, sent) for sent in origin_sentence_tokens])
-        target_sentence_vectors = wiki2vec_vectorizer(target_sentence_tokens)#np.array([mean_filtered(embed, sent) for sent in target_sentence_tokens])
+        origin_sentence_vectors = wiki2vec_vectorizer(origin_sentence_tokens)#np.array([utils.mean_filtered(embed, sent) for sent in origin_sentence_tokens])
+        target_sentence_vectors = wiki2vec_vectorizer(target_sentence_tokens)#np.array([utils.mean_filtered(embed, sent) for sent in target_sentence_tokens])
 
         top_match_indices = (1 - cosine_similarity(origin_sentence_vectors, target_sentence_vectors)[0]).argsort()
 
@@ -244,11 +195,13 @@ def apply_model(uuid):
 
 
 print("Loading model...")
-wiki2vec_embed = KeyedVectors.load('/app/wiki2vec/en.model.kv')
-wiki2vec_vectorizer = np.vectorize(lambda x: mean_filtered(wiki2vec_embed, x), signature = '()->(n)')
+models_dir = os.getenv("MODELS_DIR", "/models")
+wiki2vec_path = os.path.join(models_dir, "wiki2vec", "en.model.kv")
+wiki2vec_embed = KeyedVectors.load(wiki2vec_path)
+wiki2vec_vectorizer = np.vectorize(lambda x: utils.mean_filtered(wiki2vec_embed, x), signature = '()->(n)')
 # wiki2vec_tfidf_embed = joblib.load(models_path + '/tfidf/enwiki-latest-all-wiki2vec_tfidf_embed.joblib')
 # wiki2vec_idf = dict(zip(wiki2vec_tfidf_embed.get_feature_names(), wiki2vec_tfidf_embed.idf_))
-# tfidf_wiki2vec_vectorizer = np.vectorize(lambda x: mean_filtered(wiki2vec_embed, x, vocab_weights = wiki2vec_idf), signature = '()->(n)')
+# tfidf_wiki2vec_vectorizer = np.vectorize(lambda x: utils.mean_filtered(wiki2vec_embed, x, vocab_weights = wiki2vec_idf), signature = '()->(n)')
 print("Model successfully loaded.")
 
 if __name__ == '__main__':
