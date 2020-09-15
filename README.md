@@ -9,6 +9,6 @@ git clone
 cd wikontext
 mkdir models
 ./download_models.sh models
-docker build -t wikontext .
-docker run -it -d -v $(pwd)/models:/models -p 8000:80 wikontext
+DOCKER_BUILDKIT=1 docker build -t wikontext .
+docker run -it -d -v $(pwd)/models:/models -p 80:80 wikontext
 ```
