@@ -9,7 +9,7 @@ setup(
     version=get_version(),
     packages=['wikontext'],
     url='https://github.com/knowbodynos/wikontext',
-    license='',
+    license='MIT',
     author='Ross Altman',
     author_email='ross@rossealtman.com',
     description='Smarter page previews for a smoother Wikipedia experience'
