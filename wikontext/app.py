@@ -5,6 +5,7 @@ import re
 # import mwparserfromhell
 import nltk
 import numpy as np
+from datetime import datetime
 from bs4 import BeautifulSoup
 # import scipy.spatial.distance as sdist
 # from sklearn.feature_extraction.text import TfidfVectorizer
@@ -195,14 +196,16 @@ def apply_model(uuid):
 
 
 print("Loading model...")
+start_time = datetime.now()
 models_dir = os.getenv("MODELS_DIR", "/models")
 wiki2vec_path = os.path.join(models_dir, "wiki2vec", "en.model.kv")
-wiki2vec_embed = KeyedVectors.load(wiki2vec_path)
+wiki2vec_embed = KeyedVectors.load(wiki2vec_path, mmap='r')
 wiki2vec_vectorizer = np.vectorize(lambda x: utils.mean_filtered(wiki2vec_embed, x), signature = '()->(n)')
 # wiki2vec_tfidf_embed = joblib.load(models_path + '/tfidf/enwiki-latest-all-wiki2vec_tfidf_embed.joblib')
 # wiki2vec_idf = dict(zip(wiki2vec_tfidf_embed.get_feature_names(), wiki2vec_tfidf_embed.idf_))
 # tfidf_wiki2vec_vectorizer = np.vectorize(lambda x: utils.mean_filtered(wiki2vec_embed, x, vocab_weights = wiki2vec_idf), signature = '()->(n)')
-print("Model successfully loaded.")
+time_elapsed = datetime.now() - start_time
+print(f"Model successfully loaded. Time elapsed: {time_elapsed}")
 
 if __name__ == '__main__':
     app.run(debug = True, host = '0.0.0.0', port = 5000)

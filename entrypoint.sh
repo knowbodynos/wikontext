@@ -8,4 +8,4 @@ if ! [ -d ${MODELS_DIR}/wiki2vec ]; then
   fi
 fi
 
-gunicorn --bind 0.0.0.0:80 -t 120 wikontext.wsgi:app
+gunicorn --bind 0.0.0.0:80 -t 180 -w 1 wikontext.wsgi:app
