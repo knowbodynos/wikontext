@@ -27,4 +27,4 @@ RUN pip install --no-cache-dir .
 RUN mkdir /models
 ENV MODELS_DIR /models
 
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "--timeout", "180", "--workers", "1", "wikontext.wsgi:app"]
+CMD ["gunicorn", "--timeout", "180", "wikontext.wsgi:app"]
