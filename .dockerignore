@@ -1,4 +1,7 @@
 .git
 .idea
+chrome_extension
+letsencrypt
+nginx
 models
 docs

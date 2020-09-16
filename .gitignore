@@ -1,13 +1,6 @@
-.DS_Store
-.ipynb_checkpoints
-.idea
-data
-models
-embeddings
-eda
-*.pem
-**/.pem
+**/.DS_Store
 **/.ipynb_checkpoints
 **/__pycache__
-**/old
-**/*_bkp*
+.idea
+letsencrypt
+models
