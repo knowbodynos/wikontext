@@ -7,7 +7,7 @@ EXPOSE 80
 
 # Install dependencies
 RUN apt-get update && \
-    apt-get install -y nginx certbot && \
+    apt-get install -y python-certbot-nginx && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
 
