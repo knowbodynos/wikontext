@@ -10,5 +10,5 @@ cd wikontext
 mkdir models
 ./download_models.sh models
 DOCKER_BUILDKIT=1 docker build -t wikontext .
-docker run -it -d -v $(pwd)/models:/models -p 80:80 wikontext
+docker run -it -d -v $(pwd)/models:/models -p 80:80 -p 443:443 wikontext
 ```
