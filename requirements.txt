@@ -4,5 +4,6 @@ flask
 flask-cors
 gensim
 gunicorn
+html5lib
 nltk
 scikit-learn
