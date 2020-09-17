@@ -27,4 +27,4 @@ RUN pip install --no-cache-dir .
 RUN mkdir /models
 ENV MODELS_DIR /models
 
-ENTRYPOINT ["/bin/bash"]
+CMD ["start_server"]
