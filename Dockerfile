@@ -26,3 +26,5 @@ RUN pip install --no-cache-dir .
 # Create models directory and environment variable
 RUN mkdir /models
 ENV MODELS_DIR /models
+
+ENTRYPOINT ["/bin/bash"]
