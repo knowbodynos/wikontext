@@ -9,5 +9,5 @@ git clone https://github.com/knowbodynos/wikontext.git
 cd wikontext
 ./setup_env.sh
 ./download_models.sh models
-./docker.sh
+CERT_EMAIL=<your-email> ./docker.sh
 ```
