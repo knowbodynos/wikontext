@@ -5,15 +5,9 @@ Show the most relevant parts of a linked Wikipedia article with the hover of you
 
 ### Usage
 ```
-git clone 
+git clone https://github.com/knowbodynos/wikontext.git
 cd wikontext
-mkdir models
+./setup_env.sh
 ./download_models.sh models
-DOCKER_BUILDKIT=1 docker build -t wikontext .
-docker run -it -d -p 80:80 -p 443:443 \
-    -v $(pwd)/letsencrypt:/etc/letsencrypt \
-    -v $(pwd)/nginx/sites-available:/etc/nginx/sites-available \
-    -v $(pwd)/nginx/sites-enabled:/etc/nginx/sites-enabled \
-    -v $(pwd)/models:/models \
-    wikontext
+./docker.sh
 ```
