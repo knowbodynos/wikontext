@@ -1,7 +1,7 @@
 beautifulsoup4
 flask
 flask-cors
-gensim
+gensim==3.7.0
 gunicorn
 html5lib
 nltk

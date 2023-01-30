@@ -1,5 +1,5 @@
 # syntax = docker/dockerfile:experimental
-FROM python:3
+FROM python:3.9
 
 # Expose ports
 EXPOSE 443
@@ -7,7 +7,7 @@ EXPOSE 80
 
 # Install dependencies
 RUN apt-get update && \
-    apt-get install -y python-certbot-nginx && \
+    apt-get install -y python3-certbot-nginx && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
 
