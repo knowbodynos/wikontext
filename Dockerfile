@@ -6,8 +6,7 @@ EXPOSE 443
 EXPOSE 80
 
 # Install dependencies
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 6ED0E7B82643E131 F8D2585B8783D481 && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y python3-certbot-nginx && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/*
