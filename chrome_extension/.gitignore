@@ -1,0 +1,12 @@
+node_modules/
+package-lock.json
+.npm/
+npm-debug.log*
+*.tgz
+*.zip
+.DS_Store
+.env
+dist/
+coverage/
+.vscode/
+.eslintcache
