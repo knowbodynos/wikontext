@@ -1,0 +1,13 @@
+{
+  "name": "wikontext-chrome-extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Wikontext Chrome extension development helpers",
+  "scripts": {
+    "lint": "eslint \"src/**/*.js\"",
+    "package": "zip -r ./wikontext-chrome-extension.zip . -x \"node_modules/**\" \".git/**\" \"*.zip\""
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  }
+}

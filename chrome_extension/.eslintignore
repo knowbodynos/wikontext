@@ -1,0 +1,4 @@
+icons/
+dist/
+*.zip
+node_modules/
