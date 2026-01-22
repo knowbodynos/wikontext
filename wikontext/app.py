@@ -1,3 +1,5 @@
+# pylint: disable=import-error,unused-import
+
 import os
 #import sys
 import re
